@@ -7,6 +7,22 @@
 - jQuery.when()：提供一种方法来执行一个或多个对象的回调函数，Deferred(延迟)对象通常表示异步事件。
 - .promise()：返回一个Promise对象，用来观察当某种类型的所有行动绑定到集合，排队与否还是已经完成。
 
+## Deferred对象设计
+有3个Callback队列
+- resolved 成功
+  - promise.done触发添加处理函数到队列；
+  - deferred.resolve触发执行队列中的处理函数；
+- rejected 失败
+  - promise.fail触发添加处理函数到队列；
+  - deferred.reject触发执行队列中的处理函数；
+- pending 进行中
+  - promise.progress触发添加处理函数到队列；
+  - deferred.notify触发执行队列中的处理函数；
+
+这3个队列怎么创建出来的？
+通过$.Callbacks()创建。
+Deferred用于状态绑定，promise用于往队列添加处理函数。
+
 ## demo
 ```javascript
 var wait = function() {
